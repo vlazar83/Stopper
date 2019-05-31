@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:text="Start"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/pauseButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -36,10 +36,10 @@
         android:id="@+id/minuteTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
         android:text="00"
-        android:textSize="80sp"
+        android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="@+id/colonTextView"
         app:layout_constraintEnd_toStartOf="@+id/colonTextView"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="00"
-        android:textSize="80sp"
+        android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="@+id/colonTextView"
         app:layout_constraintEnd_toStartOf="@+id/colonTextView2"
         app:layout_constraintStart_toEndOf="@+id/colonTextView"
@@ -62,9 +62,9 @@
         android:id="@+id/millisecTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:text="000"
-        android:textSize="80sp"
+        android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="@+id/colonTextView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/colonTextView2"
@@ -84,4 +84,16 @@
         app:layout_constraintEnd_toStartOf="@+id/secondTextView"
         app:layout_constraintStart_toEndOf="@+id/minuteTextView"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/pauseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Pause"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

@@ -9,11 +9,14 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView minutesTextView;
-    TextView secondsTextView;
-    TextView millisecTextView;
+    private TextView minutesTextView;
+    private TextView secondsTextView;
+    private TextView millisecTextView;
 
-    long startTime = 0;
+    private long startTime = 0;
+    private long pauseTime = 0;
+    private long resumeTime = 0;
+    private long idleAmount = 0;
 
     //runs without a timer by reposting this handler at the end of the runnable
     Handler timerHandler = new Handler();
@@ -21,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            long millis = System.currentTimeMillis() - startTime;
+            long millis = System.currentTimeMillis() - startTime - idleAmount;
             int seconds = (int) (millis / 1000);
             int minutes = seconds / 60;
             seconds = seconds % 60;
@@ -43,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
         secondsTextView = (TextView) findViewById(R.id.secondTextView);
         millisecTextView = (TextView) findViewById(R.id.millisecTextView);
 
+
+        final Button pauseButton = (Button) findViewById(R.id.pauseButton);
+        pauseButton.setText("Pause");
+        pauseButton.setEnabled(false);
+
         Button b = (Button) findViewById(R.id.startButton);
         b.setText("start");
         b.setOnClickListener(new View.OnClickListener() {
@@ -53,16 +61,43 @@ public class MainActivity extends AppCompatActivity {
                 if (b.getText().equals("stop")) {
                     timerHandler.removeCallbacks(timerRunnable);
                     b.setText("start");
+                    pauseButton.setEnabled(false);
+                    pauseButton.setText("Pause");
                 } else {
                     startTime = System.currentTimeMillis();
+                    pauseTime = 0;
+                    resumeTime = 0;
+                    idleAmount = 0;
                     timerHandler.postDelayed(timerRunnable, 0);
                     b.setText("stop");
+                    pauseButton.setEnabled(true);
+                    pauseButton.setText("Pause");
                 }
             }
         });
 
+        pauseButton.setOnClickListener(new View.OnClickListener(){
+
+
+            @Override
+            public void onClick(View v) {
+                Button b = (Button) v;
+                if (b.getText().equals("Pause")) {
+                    pauseTime = System.currentTimeMillis();
+                    timerHandler.removeCallbacks(timerRunnable);
+                    b.setText("Resume");
+                } else {
+                    resumeTime = System.currentTimeMillis();
+                    idleAmount = idleAmount + (resumeTime - pauseTime);
+                    timerHandler.postDelayed(timerRunnable, 0);
+                    b.setText("Pause");
+                }
+
+            }
+        });
+
     }
-    
+
     @Override
     public void onPause() {
         super.onPause();
